@@ -1,0 +1,143 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+  
+
+platform :ios do
+
+  before_all do
+    ENV["SLACK_URL"] = "https://hooks.slack.com/services/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"
+    ENV["FL_SLACK_CHANNEL"] = 'project-testfastlane'
+    #cocoapods
+    puts '即将开始构建您的应用'.bold.blue
+  end
+
+
+  desc "only clean" 
+  lane :clean do
+  	xcclean
+  end
+
+
+  desc "nothing to do"
+  lane :nothing do
+  end
+
+
+  desc "Runs all the tests"
+  lane :test do
+    scan
+  end
+
+
+  desc "Submit a new Debug Build to pgyer"
+  lane :debug_build do
+    gym(scheme: "TestFastlaneNew",
+        project: "TestFastlaneNew.xcodeproj",
+        configuration: "Debug",
+        export_options: "ArchivePlist/development.plist",
+        output_directory: "Build/",
+        archive_path: "Build/TestFastlaneNew.xcarchive",
+        clean: true)
+
+    pgyer(api_key: "4d82889308f7098e20f268bcf69fc66b", user_key: "9dd8d42da4fd1c52b43618bcf2f7d952")
+  end
+
+
+  desc "Submit to pgyer"
+  lane :push_pgyer do
+  	build_app(export_method: "development")
+  	Pgyer(api_key: "4d82889308f7098e20f268bcf69fc66b", user_key: "9dd8d42da4fd1c52b43618bcf2f7d952")
+  end
+
+
+  desc "Submit a new Beta Build to Apple TestFlight"
+  desc "This will also make sure the profile is up to date"
+  lane :beta_build do
+    gym(scheme: "TestFastlaneNew",
+        project: "TestFastlaneNew.xcodeproj",
+        configuration: "Adhoc",
+        export_options: "ArchivePlist/adhoc.plist",
+        output_directory: "Build/",
+        archive_path: "Build/TestFastlaneNew.xcarchive",
+        clean: true)
+  end
+
+
+  desc "Deploy a new version to the App Store"
+  lane :release do
+    # match(type: "appstore")
+    # snapshot
+    gym(scheme: "TestFastlaneNew",
+        project: "TestFastlaneNew.xcodeproj",
+        configuration: "Release",
+        export_options: "ArchivePlist/appstore.plist",
+        output_directory: "Build/",
+        archive_path: "Build/TestFastlaneNew.xcarchive",
+        clean: true)
+  end
+
+
+  # desc "Push a new beta build to TestFlight"
+  # lane :beta do
+  #   build_app(scheme: "TestFastlaneNew")
+  #   upload_to_testflight
+  # end
+
+  # desc "gym打包"
+  # lane :TestFastlaneNew do
+  # scan
+  # gym(scheme: "TestFastlaneNew")
+  # # crashlytics
+  # end
+
+
+  # desc "重签名"
+  # lane :resign do
+  #   resign(
+  #    ipa: "./TestFastlaneNew.ipa", # can omit if using the `ipa` action
+  #    signing_identity: "iPhone Distribution: Yu Wang (HPQ97F9H9Z)",
+  #    provisioning_profile: {      
+  #       "TestFastlaneNew" => "./AdHoc_com.al.Fastlanetest.mobileprovision",
+  #       #"TestFastlaneNew" => "./AppStore_com.al.Fastlanetest.mobileprovision",
+  #   })
+  # end
+
+
+  # You can define as many lanes as you want
+
+  after_all do |lane|
+    # This block is called, only if the executed lane was successful
+    slack(
+      message: "✅✅✅ Successfully deployed new App Update.",
+      use_webhook_configured_username_and_icon: true,
+      payload: {  # Optional, lets you specify any number of your own Slack attachments.
+    	"Build Date" => Time.new.to_s,
+    	"Built by" => "Jenkins",
+  	  },
+    )
+  end
+
+  error do |lane, exception|
+    slack(
+      message: "❌❌❌[nevermore release] #{exception.message}",
+      use_webhook_configured_username_and_icon: true,
+      payload: {  # Optional, lets you specify any number of your own Slack attachments.
+    	"Build Date" => Time.new.to_s,
+    	"Built by" => "Jenkins",
+  	  },
+      success: false
+    )
+  end
+
+end

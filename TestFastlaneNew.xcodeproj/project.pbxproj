@@ -15,6 +15,7 @@
 		57350173205FAE6900B324E3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 57350172205FAE6900B324E3 /* main.m */; };
 		5735017D205FAE6900B324E3 /* TestFastlaneNewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5735017C205FAE6900B324E3 /* TestFastlaneNewTests.m */; };
 		57350188205FAE6900B324E3 /* TestFastlaneNewUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 57350187205FAE6900B324E3 /* TestFastlaneNewUITests.m */; };
+		57350197205FAECA00B324E3 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57350196205FAECA00B324E3 /* SnapshotHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,8 @@
 		57350183205FAE6900B324E3 /* TestFastlaneNewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestFastlaneNewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		57350187205FAE6900B324E3 /* TestFastlaneNewUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestFastlaneNewUITests.m; sourceTree = "<group>"; };
 		57350189205FAE6900B324E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		57350195205FAEC900B324E3 /* TestFastlaneNewUITests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TestFastlaneNewUITests-Bridging-Header.h"; sourceTree = "<group>"; };
+		57350196205FAECA00B324E3 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,8 +129,10 @@
 		57350186205FAE6900B324E3 /* TestFastlaneNewUITests */ = {
 			isa = PBXGroup;
 			children = (
+				57350196205FAECA00B324E3 /* SnapshotHelper.swift */,
 				57350187205FAE6900B324E3 /* TestFastlaneNewUITests.m */,
 				57350189205FAE6900B324E3 /* Info.plist */,
+				57350195205FAEC900B324E3 /* TestFastlaneNewUITests-Bridging-Header.h */,
 			);
 			path = TestFastlaneNewUITests;
 			sourceTree = "<group>";
@@ -199,7 +204,7 @@
 				TargetAttributes = {
 					5735015F205FAE6900B324E3 = {
 						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					57350177205FAE6900B324E3 = {
 						CreatedOnToolsVersion = 9.2;
@@ -208,6 +213,7 @@
 					};
 					57350182205FAE6900B324E3 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 5735015F205FAE6900B324E3;
 					};
@@ -284,6 +290,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				57350188205FAE6900B324E3 /* TestFastlaneNewUITests.m in Sources */,
+				57350197205FAECA00B324E3 /* SnapshotHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,7 +377,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -419,7 +426,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -430,12 +437,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3N89729R2J;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = HPQ97F9H9Z;
 				INFOPLIST_FILE = TestFastlaneNew/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Yaso.TestFastlaneNew;
+				PRODUCT_BUNDLE_IDENTIFIER = com.al.Fastlanetest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "baa61d8a-11e9-46d2-b686-91fa63d98c6d";
+				PROVISIONING_PROFILE_SPECIFIER = "com.al.Fastlanetest Development";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -444,12 +455,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3N89729R2J;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = HPQ97F9H9Z;
 				INFOPLIST_FILE = TestFastlaneNew/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Yaso.TestFastlaneNew;
+				PRODUCT_BUNDLE_IDENTIFIER = com.al.Fastlanetest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "089396fe-e3ab-4858-b9e4-afe01901afa8";
+				PROVISIONING_PROFILE_SPECIFIER = "com.al.Fastlanetest AppStore";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -487,12 +502,16 @@
 		57350193205FAE6900B324E3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3N89729R2J;
 				INFOPLIST_FILE = TestFastlaneNewUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Yaso.TestFastlaneNewUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TestFastlaneNewUITests/TestFastlaneNewUITests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = TestFastlaneNew;
 			};
@@ -501,12 +520,15 @@
 		57350194205FAE6900B324E3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3N89729R2J;
 				INFOPLIST_FILE = TestFastlaneNewUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Yaso.TestFastlaneNewUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TestFastlaneNewUITests/TestFastlaneNewUITests-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = TestFastlaneNew;
 			};

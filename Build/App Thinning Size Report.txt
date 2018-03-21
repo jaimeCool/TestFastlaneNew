@@ -1,0 +1,22 @@
+
+App Thinning Size Report for All Variants of TestFastlaneNew
+
+Variant: TestFastlaneNew-iPad 2-etc.ipa
+Supported devices: iPad (3rd generation), iPad (4th generation), iPad 2, iPad mini, iPhone 4S, iPhone 5, iPhone 5c, and iPod touch
+App + On Demand Resources size: 25 KB compressed, 85 KB uncompressed
+App size: 25 KB compressed, 85 KB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: TestFastlaneNew-iPhone 7 Plus-etc.ipa
+Supported devices: iPad (5th generation), iPad Air, iPad Air 2, iPad Pro (10.5-inch), iPad Pro (12.9-inch), iPad Pro (12.9-inch) (2nd generation), iPad Pro (9.7-inch), iPad mini 2, iPad mini 3, iPad mini 4, iPhone 5s, iPhone 6, iPhone 6 Plus, iPhone 6s, iPhone 6s Plus, iPhone 7, iPhone 7 Plus, iPhone 8, iPhone 8 Plus, iPhone SE, iPhone X, and iPod touch (6th generation)
+App + On Demand Resources size: 25 KB compressed, 86 KB uncompressed
+App size: 25 KB compressed, 86 KB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: TestFastlaneNew.ipa
+Supported devices: Universal
+App + On Demand Resources size: 35 KB compressed, 165 KB uncompressed
+App size: 35 KB compressed, 165 KB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed

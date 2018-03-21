@@ -9,6 +9,29 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>TestFastlaneNewUITests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>5735015F205FAE6900B324E3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>57350177205FAE6900B324E3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>57350182205FAE6900B324E3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 	</dict>
 </dict>
 </plist>
