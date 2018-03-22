@@ -21,11 +21,6 @@ or alternatively using `brew cask install fastlane`
 fastlane ios clean
 ```
 only clean
-### ios nothing
-```
-fastlane ios nothing
-```
-nothing to do
 ### ios test
 ```
 fastlane ios test
@@ -36,23 +31,31 @@ Runs all the tests
 fastlane ios debug_build
 ```
 Submit a new Debug Build to pgyer
-### ios push_pgyer
-```
-fastlane ios push_pgyer
-```
-Submit to pgyer
 ### ios beta_build
 ```
 fastlane ios beta_build
 ```
 Submit a new Beta Build to Apple TestFlight
-
-This will also make sure the profile is up to date
 ### ios release
 ```
 fastlane ios release
 ```
 Deploy a new version to the App Store
+### ios push_pgyer
+```
+fastlane ios push_pgyer
+```
+Submit to pgyer
+### ios beta
+```
+fastlane ios beta
+```
+Push a new beta build to TestFlight
+### ios resign_lane
+```
+fastlane ios resign_lane
+```
+重签名
 
 ----
 

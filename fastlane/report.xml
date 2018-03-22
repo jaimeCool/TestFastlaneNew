@@ -5,17 +5,27 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.001273">
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.001193">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: xcclean" time="2.978289">
+      <testcase classname="fastlane.lanes" name="1: gym" time="8.954382">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: slack" time="1.403674">
+      <testcase classname="fastlane.lanes" name="2: Switch to ios push_pgyer lane" time="0.001179">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="3: pgyer" time="1.312205">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="4: slack" time="0.715601">
         
       </testcase>
     

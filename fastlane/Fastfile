@@ -19,29 +19,27 @@ platform :ios do
     ENV["SLACK_URL"] = "https://hooks.slack.com/services/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"
     ENV["FL_SLACK_CHANNEL"] = 'project-testfastlane'
     #cocoapods
-    puts '即将开始构建您的应用'.bold.blue
+    puts '开始执行'.bold.blue
   end
 
 
   desc "only clean" 
   lane :clean do
+  	puts '清理项目空间'.bold.blue
   	xcclean
-  end
-
-
-  desc "nothing to do"
-  lane :nothing do
   end
 
 
   desc "Runs all the tests"
   lane :test do
+  	puts 'Unit & UI 测试'.bold.blue
     scan
   end
 
 
   desc "Submit a new Debug Build to pgyer"
   lane :debug_build do
+  	puts '即将开始构建Debug包'.bold.blue
     gym(scheme: "TestFastlaneNew",
         project: "TestFastlaneNew.xcodeproj",
         configuration: "Debug",
@@ -50,19 +48,12 @@ platform :ios do
         archive_path: "Build/TestFastlaneNew.xcarchive",
         clean: true)
 
-    pgyer(api_key: "4d82889308f7098e20f268bcf69fc66b", user_key: "9dd8d42da4fd1c52b43618bcf2f7d952")
-  end
-
-
-  desc "Submit to pgyer"
-  lane :push_pgyer do
-  	build_app(export_method: "development")
-  	Pgyer(api_key: "4d82889308f7098e20f268bcf69fc66b", user_key: "9dd8d42da4fd1c52b43618bcf2f7d952")
+    # 调用其他lane
+    push_pgyer
   end
 
 
   desc "Submit a new Beta Build to Apple TestFlight"
-  desc "This will also make sure the profile is up to date"
   lane :beta_build do
     gym(scheme: "TestFastlaneNew",
         project: "TestFastlaneNew.xcodeproj",
@@ -71,6 +62,8 @@ platform :ios do
         output_directory: "Build/",
         archive_path: "Build/TestFastlaneNew.xcarchive",
         clean: true)
+    #upload_to_testflight
+    push_pgyer
   end
 
 
@@ -84,34 +77,44 @@ platform :ios do
         export_options: "ArchivePlist/appstore.plist",
         output_directory: "Build/",
         archive_path: "Build/TestFastlaneNew.xcarchive",
+        codesigning_identity: "iPhone Distribution: Yu Wang (HPQ97F9H9Z)",
         clean: true)
+    #upload_to_app_store
+    push_pgyer
   end
 
 
-  # desc "Push a new beta build to TestFlight"
-  # lane :beta do
-  #   build_app(scheme: "TestFastlaneNew")
-  #   upload_to_testflight
-  # end
-
-  # desc "gym打包"
-  # lane :TestFastlaneNew do
-  # scan
-  # gym(scheme: "TestFastlaneNew")
-  # # crashlytics
-  # end
+  desc "Submit to pgyer"
+  lane :push_pgyer do
+  	puts '推送到蒲公英'.bold.blue
+  	Pgyer(api_key: "4d82889308f7098e20f268bcf69fc66b", user_key: "9dd8d42da4fd1c52b43618bcf2f7d952")
+  end
 
 
-  # desc "重签名"
-  # lane :resign do
-  #   resign(
-  #    ipa: "./TestFastlaneNew.ipa", # can omit if using the `ipa` action
-  #    signing_identity: "iPhone Distribution: Yu Wang (HPQ97F9H9Z)",
-  #    provisioning_profile: {      
-  #       "TestFastlaneNew" => "./AdHoc_com.al.Fastlanetest.mobileprovision",
-  #       #"TestFastlaneNew" => "./AppStore_com.al.Fastlanetest.mobileprovision",
-  #   })
-  # end
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+    build_app(scheme: "TestFastlaneNew")
+    upload_to_testflight
+  end
+
+
+  desc "重签名"
+  lane :resign_lane do |options|
+  	puts "重签名为：#{options[:resign_type]}类型ipa".bold.blue
+  	type = "Development_com.al.Fastlanetest.mobileprovision"
+  	if options[:resign_type] == 'Adhoc'
+  		type = 'AdHoc_com.al.Fastlanetest.mobileprovision'
+  	elsif options[:resign_type] == 'Appstore'
+  		type = 'AppStore_com.al.Fastlanetest.mobileprovision'
+  	end
+
+    resign(
+     ipa: "./TestFastlaneNew.ipa", # can omit if using the `ipa` action
+     signing_identity: "iPhone Distribution: Yu Wang (HPQ97F9H9Z)",
+     provisioning_profile: {      
+        "TestFastlaneNew" => "./#{type}",
+    })
+  end
 
 
   # You can define as many lanes as you want
@@ -130,7 +133,7 @@ platform :ios do
 
   error do |lane, exception|
     slack(
-      message: "❌❌❌[nevermore release] #{exception.message}",
+      message: "❌❌❌ Failed：#{exception.message}",
       use_webhook_configured_username_and_icon: true,
       payload: {  # Optional, lets you specify any number of your own Slack attachments.
     	"Build Date" => Time.new.to_s,
