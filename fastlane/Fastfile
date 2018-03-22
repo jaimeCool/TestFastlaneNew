@@ -19,7 +19,7 @@ platform :ios do
     ENV["SLACK_URL"] = "https://hooks.slack.com/services/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"
     ENV["FL_SLACK_CHANNEL"] = 'project-testfastlane'
     #cocoapods
-    puts '开始执行'.bold.blue
+    puts "开始执行".bold.blue
   end
 
 
@@ -40,14 +40,16 @@ platform :ios do
   desc "Submit a new Debug Build to pgyer"
   lane :debug_build do
   	puts '即将开始构建Debug包'.bold.blue
+  	increment_build_number
     gym(scheme: "TestFastlaneNew",
         project: "TestFastlaneNew.xcodeproj",
         configuration: "Debug",
         export_options: "ArchivePlist/development.plist",
         output_directory: "Build/",
+        output_name: "TestFastlaneNew-Debug#{get_build_number}.ipa",
         archive_path: "Build/TestFastlaneNew.xcarchive",
         clean: true)
-
+    
     # 调用其他lane
     push_pgyer
   end
@@ -109,10 +111,10 @@ platform :ios do
   	end
 
     resign(
-     ipa: "./TestFastlaneNew.ipa", # can omit if using the `ipa` action
+     ipa: "./Build/TestFastlaneNew.ipa", # can omit if using the `ipa` action
      signing_identity: "iPhone Distribution: Yu Wang (HPQ97F9H9Z)",
      provisioning_profile: {      
-        "TestFastlaneNew" => "./#{type}",
+        "TestFastlaneNew" => "./Certificates/#{type}",
     })
   end
 
@@ -121,12 +123,15 @@ platform :ios do
 
   after_all do |lane|
     # This block is called, only if the executed lane was successful
+    version = "当前版本：V#{get_version_number(target:"TestFastlaneNew")}（#{get_build_number}）"
+    puts version.bold.green
     slack(
       message: "✅✅✅ Successfully deployed new App Update.",
       use_webhook_configured_username_and_icon: true,
       payload: {  # Optional, lets you specify any number of your own Slack attachments.
     	"Build Date" => Time.new.to_s,
     	"Built by" => "Jenkins",
+    	"Version" => version
   	  },
     )
   end
