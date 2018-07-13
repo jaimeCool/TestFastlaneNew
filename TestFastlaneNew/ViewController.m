@@ -34,7 +34,7 @@
 }
 
 - (void)btnAction {
-  UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"alertCtr" message:@"6不6" preferredStyle:UIAlertControllerStyleAlert];
+  UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"alertCtr" message:@"6不66" preferredStyle:UIAlertControllerStyleAlert];
   
   UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
     NSLog(@"OK");
